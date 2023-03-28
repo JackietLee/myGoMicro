@@ -2,6 +2,8 @@ package handler
 
 import (
 	"context"
+	first "first/proto"
+	"go-micro.dev/v4"
 	"io"
 	"time"
 
@@ -14,7 +16,14 @@ type MyGoMicro struct{}
 
 func (e *MyGoMicro) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallResponse) error {
 	logger.Infof("Received MyGoMicro.Call request: %v", req)
-	rsp.Msg = "Hello " + req.Name
+	//rsp.Msg = "Hello " + req.Name
+	service := micro.NewService()
+	service.Init()
+	firstService := first.NewFirstService("first", service.Client())
+	call, _ := firstService.Call(context.Background(), &first.CallRequest{
+		Name: req.Name,
+	})
+	rsp.Msg = call.Msg
 	return nil
 }
 
