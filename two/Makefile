@@ -8,7 +8,7 @@ init:
 
 .PHONY: proto
 proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/myGoMicro.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/two.proto
 
 .PHONY: update
 update:
@@ -20,7 +20,7 @@ tidy:
 
 .PHONY: build
 build:
-	@go build -o myGoMicro *.go
+	@go build -o two.exe two
 
 .PHONY: test
 test:

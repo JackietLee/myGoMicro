@@ -9,16 +9,21 @@ import (
 
 	"go-micro.dev/v4/logger"
 
-	pb "myGoMicro/proto"
+	pb "two/proto"
 )
 
-type MyGoMicro struct{}
+var service micro.Service
 
-func (e *MyGoMicro) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallResponse) error {
+func init() {
+	service = micro.NewService()
+	service.Init()
+}
+
+type Two struct{}
+
+func (e *Two) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallResponse) error {
 	logger.Infof("Received MyGoMicro.Call request: %v", req)
 	//rsp.Msg = "Hello " + req.Name
-	service := micro.NewService()
-	service.Init()
 	firstService := first.NewFirstService("first", service.Client())
 	call, _ := firstService.Call(context.Background(), &first.CallRequest{
 		Name: req.Name,
@@ -27,7 +32,7 @@ func (e *MyGoMicro) Call(ctx context.Context, req *pb.CallRequest, rsp *pb.CallR
 	return nil
 }
 
-func (e *MyGoMicro) ClientStream(ctx context.Context, stream pb.MyGoMicro_ClientStreamStream) error {
+func (e *Two) ClientStream(ctx context.Context, stream pb.Two_ClientStreamStream) error {
 	var count int64
 	for {
 		req, err := stream.Recv()
@@ -43,7 +48,7 @@ func (e *MyGoMicro) ClientStream(ctx context.Context, stream pb.MyGoMicro_Client
 	}
 }
 
-func (e *MyGoMicro) ServerStream(ctx context.Context, req *pb.ServerStreamRequest, stream pb.MyGoMicro_ServerStreamStream) error {
+func (e *Two) ServerStream(ctx context.Context, req *pb.ServerStreamRequest, stream pb.Two_ServerStreamStream) error {
 	logger.Infof("Received MyGoMicro.ServerStream request: %v", req)
 	for i := 0; i < int(req.Count); i++ {
 		logger.Infof("Sending %d", i)
@@ -57,7 +62,7 @@ func (e *MyGoMicro) ServerStream(ctx context.Context, req *pb.ServerStreamReques
 	return nil
 }
 
-func (e *MyGoMicro) BidiStream(ctx context.Context, stream pb.MyGoMicro_BidiStreamStream) error {
+func (e *Two) BidiStream(ctx context.Context, stream pb.Two_BidiStreamStream) error {
 	for {
 		req, err := stream.Recv()
 		if err == io.EOF {

@@ -10,7 +10,7 @@ RUN apk --update --no-cache add ca-certificates gcc libtool make musl-dev protoc
 # Build Go binary
 COPY Makefile go.mod go.sum ./
 RUN make init && go mod download 
-COPY . .
+COPY .. .
 RUN make proto tidy build
 
 # Deployment container

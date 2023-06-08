@@ -8,7 +8,7 @@ init:
 
 .PHONY: proto
 proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/first.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/three.proto
 
 .PHONY: update
 update:
@@ -16,11 +16,11 @@ update:
 
 .PHONY: tidy
 tidy:
-	@go mod tidy -compat='1.17'
+	@go mod tidy
 
 .PHONY: build
 build:
-	@go build -o first.exe first
+	@go build -o three *.go
 
 .PHONY: test
 test:
@@ -28,4 +28,4 @@ test:
 
 .PHONY: docker
 docker:
-	@docker build -t first:latest .
+	@docker build -t three:latest .

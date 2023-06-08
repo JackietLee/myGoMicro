@@ -16,4 +16,4 @@
 
 # don't commit the service binary to vcs
 myGoMicro
-.idea
+../.idea

@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package myGoMicro;
+package two;
 
-option go_package = "./proto;myGoMicro";
+option go_package = "./proto;two";
 
-service MyGoMicro {
+service two {
 	rpc Call(CallRequest) returns (CallResponse) {}
 	rpc ClientStream(stream ClientStreamRequest) returns (ClientStreamResponse) {}
 	rpc ServerStream(ServerStreamRequest) returns (stream ServerStreamResponse) {}

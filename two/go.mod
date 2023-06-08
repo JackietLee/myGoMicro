@@ -1,4 +1,4 @@
-module myGoMicro
+module two
 
 go 1.17
 
@@ -46,4 +46,6 @@ require (
 require (
 	first v0.0.0
 )
-replace first => ./first
+replace first => ./../first
+
+replace two => ./

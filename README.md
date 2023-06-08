@@ -12,4 +12,4 @@ or go install github.com/go-micro/cli/cmd/go-micro@v1.1.4
 5.choco install make
 
 6.goland配置make
-![img.png](img.png)
+![img.png](two/img.png)
